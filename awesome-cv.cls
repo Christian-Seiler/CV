@@ -150,6 +150,7 @@
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
+\definecolor{awesome-lime}{HTML}{00FF00}
 \colorlet{awesome}{awesome-red}
 
 % Awesome section color
