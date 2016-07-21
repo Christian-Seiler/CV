@@ -323,6 +323,10 @@
 % Usage: \twitter{<twitter handle>}
 \newcommand*{\twitter}[1]{\def\@twitter{#1}}
 
+% Defines writer's birthday (optional)
+% Usage: \birthday{<date>}
+\newcommand*{\birthday}[1]{\def\@birthday{#1}}
+
 % Defines writer's quote (optional)
 % Usage: \quote{<quote>}
 \renewcommand*{\quote}[1]{\def\@quote{#1}}
@@ -483,12 +487,32 @@
             {\@headersocialsep}
           \faSkype\ \@skype
         }
-    } \\
+    \\
+      \ifthenelse{\isundefined{\@birthday}}
+        {}
+        {
+          \ifbool{isstart}
+            {
+              \setbool{istart}{false} 
+            }
+          \faBirthdayCake\ \@birthday
+        }
+     } \\
+    
     \ifthenelse{\isundefined{\@quote}}
       {}
       {\vspace{6.0mm}\headerquotestyle{\@quote\\}\vspace{5.0mm}}
   \end{center}
 }
+
+\newcommand*{\starfull}{\textcolor{awesome-lime}{\faicon{star}}}
+\newcommand*{\starempty}{\faicon{star-o}}
+
+\newcommand*{\starx}[1]{\starfull\starempty\starempty\starempty\starempty \hspace{1em} #1}
+\newcommand*{\starxx}[1]{\starfull\starfull\starempty\starempty\starempty \hspace{1em} #1}
+\newcommand*{\starxxx}[1]{\starfull\starfull\starfull\starempty\starempty \hspace{1em} #1}
+\newcommand*{\starxxxx}[1]{\starfull\starfull\starfull\starfull\starempty \hspace{1em} #1}
+\newcommand*{\starxxxxx}[1]{\starfull\starfull\starfull\starfull\starfull \hspace{1em} #1}
 
 % Define a footer for CV
 % Usage: \makecvfooter{<left>}{<center>}{<right>}
@@ -584,20 +608,21 @@
 }
 
 % Define an environment for cvskill
-\newenvironment{cvskills}{
-  \begin{center}
+% Usage: \begin{skills}{Language}
+\newenvironment{skills}[1]
+% before
+{\begin{minipage}[t]{.5\textwidth}
+	\cvsubsection{#1} 
+	\\ 
+    \begin{center}
     \setlength\tabcolsep{1ex}
     \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{15.2cm}}
-}{
-    \end{tabular*}
-  \end{center}
+    \begin{tabular*}{\textwidth}{ r l }
 }
-% Define a line of cv information(skill)
-% Usage: \cvskill{<type>}{<skillset>}
-\newcommand*{\cvskill}[2]{
-	\skilltypestyle{#1} & \skillsetstyle{#2} 
-  \\
+% after
+{    \end{tabular*}
+  \end{center}
+\end{minipage}
 }
 
 % Define an environment for cvitems(for cventry)
@@ -613,6 +638,45 @@
   \vspace{-2mm}
 }
 
+% Define a line of cv information(skill)
+% Usage: \cvskill{<type>}{<skillset>}{<skillset>}
+\newcommand*{\cvskill}[2]{
+	\skilltypestyle{#1} & \skillsetstyle{#2}
+  \\
+}
+
+% Define an environment for cvpersonality
+% Usage: \begin{personality}{<competence name>}
+\newenvironment{personality}[1]
+{\begin{minipage}[t]{.5\textwidth}
+	\cvsubsection{#1}
+    \\
+    \begin{center}
+    \setlength\tabcolsep{1ex}
+    \setlength{\extrarowheight}{0pt}
+    \begin{tabular*}{\textwidth}{ l }
+}
+% after
+{    \end{tabular*}
+  \end{center}
+\end{minipage}
+}
+
+\newcommand*{\competence}[1]{
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{12.5cm} R{4.5cm}}
+      \entrytitlestyle{#1}\\
+  \end{tabular*}
+}
+
+
+% Define a line of cv information(skill)
+% Usage: \cvskill{<type>}{<skillset>}{<skillset>}
+\newcommand*{\comp}[1]{
+	\skilltypestyle{#1}
+  \\
+}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
